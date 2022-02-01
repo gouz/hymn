@@ -6,15 +6,9 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
 
   body
-    h1 Hymn
-
-    main
-      .controls
-        button#btn-play Play
-        button#btn-pause Pause
-        button#btn-stop Stop
-      h2#loading Loading
+    #app
+      h1 Hymn
+      include pug/form
       #score
-    </main>
 
     script(src="./js/main.js", type="module")

@@ -20,7 +20,7 @@
     "parcel": "parcel $RUN",
     "build": "RUN=build npm run parcel -- --no-cache --no-source-maps --dist-dir docs --public-url \"./\"",
     "watch": "RUN=watch npm run parcel",
-    "dev": "RUN=serve npm run parcel -- --open --https"
+    "dev": "RUN=serve npm run parcel -- --open"
   },
   "devDependencies": {
     "@parcel/compressor-brotli": "2.2.1",
@@ -37,7 +37,6 @@
     "tailwindcss": "3.0.15"
   },
   "dependencies": {
-    "opensheetmusicdisplay": "^1.4.3",
-    "osmd-audio-player": "^0.7.0"
+    "vexflow": "^4.0.0"
   }
 }

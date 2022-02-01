@@ -8,8 +8,7 @@
     ]
   },
   "reporters": [
-    "...",
-    "parcel-reporter-static-files-copy"
+    "..."
   ],
   "transformers": {
     "*.css": [
