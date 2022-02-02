@@ -37,6 +37,6 @@
     "tailwindcss": "3.0.18"
   },
   "dependencies": {
-    "vexflow": "^4.0.0"
+    "vexflow": "4.0.0"
   }
 }
