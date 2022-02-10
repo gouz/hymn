@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@parcel/compressor-brotli": "2.2.1",
-    "@parcel/compressor-gzip": "2.2.1",
+    "@parcel/compressor-gzip": "2.3.0",
     "@parcel/optimizer-css": "2.2.1",
     "@parcel/transformer-css-experimental": "2.3.0",
     "@parcel/transformer-less": "2.2.1",
