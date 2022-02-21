@@ -67,6 +67,7 @@ window.$hymn.calculate = (text) => {
     t: "B ",
     o: "A ",
     w: "B ",
+    j: "E ",
     // dur
     "A x": "A# ",
     "B x": "B# ",
