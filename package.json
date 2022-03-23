@@ -30,7 +30,7 @@
     "@parcel/transformer-less": "2.3.2",
     "@parcel/transformer-pug": "2.3.2",
     "@prettier/plugin-pug": "1.19.3",
-    "abcjs": "6.0.1",
+    "abcjs": "6.0.2",
     "autoprefixer": "10.4.4",
     "eslint": "8.11.0",
     "parcel": "2.3.2",
