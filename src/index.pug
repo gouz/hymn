@@ -1,4 +1,3 @@
-doctype html
 html(lang="en")
   head
     meta(charset="UTF-8")
@@ -6,10 +5,22 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
 
   body
-    #app
+    header
       h1 Hymn
-      include pug/form
-      #paper
-      #audio
+      a#github(
+        href="https://github.com/gouz/hymn",
+        rel="noopener",
+        title="Link to the project",
+        target="_blank"
+      )
+        include img/github.svg
+        span.a11y Link to the source
+
+    form
+      input#data(type="text", placeholder="Your text")
+
+    #audio
+
+    #sheet
 
     script(src="./js/main.js", type="module")

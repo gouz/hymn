@@ -1,0 +1,25 @@
+header {
+
+    @apply flex items-center;
+    @apply my-4;
+
+    h1 {
+        @apply text-slate-200 font-bold text-2xl;
+        @apply text-center;
+        @apply flex-grow;
+    }
+    
+    #github {
+        @apply text-slate-300;
+        @apply float-right;
+        @apply mr-5;
+    
+        svg {
+            @apply w-10 h-10;
+        }
+    
+        &:hover {
+            @apply text-red-300;
+        }
+    }
+}

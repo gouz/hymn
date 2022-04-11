@@ -1,11 +1,21 @@
-.form {
-  @apply flex items-center my-4;
+form {
 
-  label {
-    @apply sr-only;
-  }
+    @apply flex items-center justify-center flex-col space-y-5;
 
-  input {
-    @apply px-2 py-1 rounded h-12 mr-1 text-slate-800 text-lg border border-slate-600 w-96;
-  }
+    input {
+        @apply px-2 py-1;
+        @apply rounded;
+        @apply w-96 h-12;
+        @apply text-slate-800 text-lg;
+        @apply border border-slate-600;
+        @apply shadow-lg shadow-slate-600;
+    }
+
+    textarea {
+        @apply px-2 py-1;
+        @apply rounded;
+        @apply w-96 h-24;
+        @apply text-slate-800 text-lg;
+    }
+
 }
