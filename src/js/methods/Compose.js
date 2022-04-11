@@ -24,25 +24,34 @@ L: 1/8
       return n;
     };
     let nbTemps = 0;
-    this._chords.forEach((n, i) => {
+    let previousPitch = {
+      A: "",
+      B: "",
+      C: "",
+      D: "",
+      E: "",
+      F: "",
+      G: "",
+    };
+    this._chords.forEach((n) => {
       let mul = 2;
       nbTemps += mul;
-      /*
-      if (1 == n.length && "" != previousPitch[n]) {
-        n = `=${n}`;
-        previousPitch[n] = "";
-      } else if (2 == n.length) {
-        if ("" != previousPitch[n] && n.substr(1, 1) == previousPitch[n]) {
-          n = n.substr(0, 1);
-        }
+      const note = n.substr(0, 1);
+      let pitch = "";
+      if (n.length == 2) {
+        pitch = n.substr(1, 1);
       }
-      */
+      if ("" == pitch && "" != previousPitch[note]) {
+        n = `=${n}`;
+      } else if ("" != pitch && pitch == previousPitch[note]) {
+        n = note;
+      }
+      previousPitch[note] = pitch;
       // , = octave down
       score += `${alt(n)}${mul}`;
       if (nbTemps == 2 * this._subdiv) {
         score += " | ";
         nbTemps = 0;
-        /*
         previousPitch = {
           A: "",
           B: "",
@@ -52,7 +61,6 @@ L: 1/8
           F: "",
           G: "",
         };
-        */
       }
     });
     return score;
