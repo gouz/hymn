@@ -24,7 +24,7 @@ L: 1/8
       return n;
     };
     let nbTemps = 0;
-    let previousPitch = {
+    let previousAccidentals = {
       A: "",
       B: "",
       C: "",
@@ -37,22 +37,40 @@ L: 1/8
       let mul = 2;
       nbTemps += mul;
       const note = n.substr(0, 1);
-      let pitch = "";
+      let accidental = "";
       if (n.length == 2) {
-        pitch = n.substr(1, 1);
+        accidental = n.substr(1, 1);
       }
-      if ("" == pitch && "" != previousPitch[note]) {
+      if ("" == accidental && "" != previousAccidentals[note]) {
         n = `=${n}`;
-      } else if ("" != pitch && pitch == previousPitch[note]) {
+      } else if ("" != accidental && accidental == previousAccidentals[note]) {
         n = note;
       }
-      previousPitch[note] = pitch;
-      // , = octave down
+      previousAccidentals[note] = accidental;
+      const pitch = Math.floor(4 * Math.random());
+      switch (pitch) {
+        case 0:
+          // bass
+          n += ",";
+          break;
+        default:
+        case 1:
+          // no change
+          break;
+        case 2:
+          // octave sup
+          n = n.toLowerCase();
+          break;
+        case 3:
+          // treble
+          n = `${n.toLowerCase()}'`;
+          break;
+      }
       score += `${alt(n)}${mul}`;
       if (nbTemps == 2 * this._subdiv) {
         score += " | ";
         nbTemps = 0;
-        previousPitch = {
+        previousAccidentals = {
           A: "",
           B: "",
           C: "",
