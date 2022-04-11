@@ -33,6 +33,15 @@ L: 1/8
       F: "",
       G: "",
     };
+    let previousPitchs = {
+      A: 1,
+      B: 1,
+      C: 1,
+      D: 1,
+      E: 1,
+      F: 1,
+      G: 1,
+    };
     this._chords.forEach((n) => {
       let mul = 2;
       nbTemps += mul;
@@ -47,7 +56,15 @@ L: 1/8
         n = note;
       }
       previousAccidentals[note] = accidental;
-      const pitch = Math.floor(4 * Math.random());
+      let pitch = Math.floor(4 * Math.random());
+      if (Math.abs(previousPitchs[note] - pitch) > 1) {
+        if (pitch > previousPitchs[note]) {
+          pitch = previousPitchs[note] + 1;
+        } else {
+          pitch = previousPitchs[note] - 1;
+        }
+      }
+      previousPitchs[note] = pitch;
       switch (pitch) {
         case 0:
           // bass
