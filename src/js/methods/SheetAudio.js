@@ -3,6 +3,7 @@ import "abcjs/abcjs-audio.css";
 
 export default class SheetAudio {
   constructor(elementSheet, elementAudio, score) {
+    console.log(score);
     const visualObj = ABCJS.renderAbc(elementSheet, score, {
       add_classes: true,
     });

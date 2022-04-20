@@ -1,9 +1,33 @@
+import chordsJson from "../../json/chords.json";
+
 export default class Compose {
   constructor(text, chords) {
     this._text = text;
     this._chords = chords;
 
     this._subdiv = 4;
+  }
+
+  _alt(n) {
+    return n.replace(/(\w)-/g, "_$1").replace(/(\w)\+/, "^$1");
+  }
+
+  _chordify(n) {
+    const note = n.replace(/[_^]/, "");
+    let sep = ",";
+    if ("A" == note || "B" == note) {
+      sep = ",,";
+    }
+    return `[${chordsJson[n].join(sep)}${sep}]`;
+  }
+
+  _arpegify(n) {
+    return [
+      `${chordsJson[n][0]}2`,
+      `${chordsJson[n][1]}2`,
+      `${chordsJson[n][2]}2`,
+      `${chordsJson[n][1]}2`,
+    ].join(" ");
   }
 
   render() {
@@ -17,13 +41,8 @@ M: ${this._subdiv}/4
 V: T1 clef=treble
 V: B1 clef=bass
 L: 1/8
-[V: T1]
 `.trim() + " ";
-    const alt = (n) => {
-      n = n.replace(/(\w)-/g, "_$1").replace(/(\w)\+/, "^$1");
-      return n;
-    };
-    let nbTemps = 0;
+    /*
     let previousAccidentals = {
       A: "",
       B: "",
@@ -33,6 +52,8 @@ L: 1/8
       F: "",
       G: "",
     };
+    */
+    /*
     let previousPitchs = {
       A: 1,
       B: 1,
@@ -42,9 +63,11 @@ L: 1/8
       F: 1,
       G: 1,
     };
-    this._chords.forEach((n) => {
-      let mul = 2;
-      nbTemps += mul;
+    */
+    let trebleVoice = [];
+    let bassVoice = [];
+    this._chords.forEach((n, i) => {
+      /*
       const note = n.substr(0, 1);
       let accidental = "";
       if (n.length == 2) {
@@ -56,6 +79,8 @@ L: 1/8
         n = note;
       }
       previousAccidentals[note] = accidental;
+      */
+      /*
       let pitch = Math.floor(4 * Math.random());
       if (Math.abs(previousPitchs[note] - pitch) > 1) {
         if (pitch > previousPitchs[note]) {
@@ -83,21 +108,18 @@ L: 1/8
           n = `${n.toLowerCase()}'`;
           break;
       }
-      score += `${alt(n)}${mul}`;
-      if (nbTemps == 2 * this._subdiv) {
-        score += " | ";
-        nbTemps = 0;
-        previousAccidentals = {
-          A: "",
-          B: "",
-          C: "",
-          D: "",
-          E: "",
-          F: "",
-          G: "",
-        };
-      }
+      */
+      trebleVoice.push(
+        `${i == 0 ? "\n[V: T1]" : ""}${this._arpegify(this._alt(n))}`
+      );
+      bassVoice.push(
+        `${i == 0 ? "\n[V: B1]" : ""}${this._chordify(this._alt(n))}${
+          2 * this._subdiv
+        }`
+      );
     });
-    return score;
+    return `${score}\n[V: T1] ${trebleVoice.join(
+      "|"
+    )}|]\n[V: B1] ${bassVoice.join("|")}|]`;
   }
 }
