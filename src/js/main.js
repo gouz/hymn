@@ -13,6 +13,11 @@ const maestro = (text) => {
   share.defineLink(text);
 };
 
+const currentLink = share.fetchLink();
+if ("" != currentLink) {
+  maestro(currentLink);
+}
+
 document.getElementById("data").addEventListener(
   "keydown",
   (event) => {
@@ -23,9 +28,3 @@ document.getElementById("data").addEventListener(
   },
   false
 );
-
-if ("" != window.location.hash) {
-  const text = share.fetchLink();
-  document.getElementById("data").value = text;
-  maestro(text);
-}
