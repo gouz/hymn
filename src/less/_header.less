@@ -1,19 +1,18 @@
 header {
+  @apply fixed;
+  @apply w-full;
+  @apply flex items-center justify-end;
 
-    @apply fixed;
-    @apply w-full;
-    @apply flex items-center justify-end;
+  #github {
+    @apply text-slate-300;
+    @apply m-2;
 
-    #github {
-        @apply text-slate-300;
-        @apply m-2;
-    
-        svg {
-            @apply w-10 h-10;
-        }
-    
-        &:hover {
-            @apply text-red-300;
-        }
+    svg {
+      @apply w-10 h-10;
     }
+
+    &:hover {
+      @apply text-red-300;
+    }
+  }
 }

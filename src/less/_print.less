@@ -1,5 +1,17 @@
 @media print {
-    header, form, #audio {
-        @apply hidden;
+  header,
+  form,
+  #audio,
+  #buttons-wrapper {
+    @apply hidden;
+  }
+
+  main {
+    @apply block;
+
+    .jumbotron {
+      @apply border-none;
+      @apply shadow-none;
     }
+  }
 }

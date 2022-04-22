@@ -1,48 +1,47 @@
 #form {
+  h1 {
+    @apply w-full;
+    @apply font-bold text-2xl text-center;
+  }
 
-    h1 {
-        @apply w-full;
-        @apply font-bold text-2xl text-center;
-    }
+  p {
+    @apply my-2;
+    @apply text-lg text-center;
+  }
 
-    p {
-        @apply my-2;
-        @apply text-lg text-center;
-    }
+  form {
+    @apply flex items-center justify-center flex-col;
 
-    form {
-    
-        @apply flex items-center justify-center flex-col;
-    
-        input {
-            @apply px-2 py-1;
-            @apply w-96 h-12;
-            @apply mb-2;
-            @apply rounded;
-            @apply text-slate-800 text-lg text-center;
-            @apply border border-slate-600;
-        }
+    input {
+      @apply px-2 py-1;
+      @apply w-96 h-12;
+      @apply mb-2;
+      @apply rounded;
+      @apply text-slate-800 text-lg text-center;
+      @apply border border-slate-600;
     }
+  }
 }
 
-button, [type="button"] {
-    @apply px-4 py-2;
-    @apply rounded;
-    @apply text-white;
-    @apply bg-green-700;
-    @apply border border-green-800;
-    @apply flex items-center;
-    
-    svg {
-        @apply h-5 w-5;
-    }
+button,
+[type="button"] {
+  @apply px-4 py-2;
+  @apply rounded;
+  @apply text-white;
+  @apply bg-green-700;
+  @apply border border-green-800;
+  @apply flex items-center;
 
-    span {
-        @apply ml-2;
-        @apply whitespace-nowrap;
-    }
+  svg {
+    @apply h-5 w-5;
+  }
 
-    &:hover {
-        @apply bg-green-500;
-    }
+  span {
+    @apply ml-2;
+    @apply whitespace-nowrap;
+  }
+
+  &:hover {
+    @apply bg-green-500;
+  }
 }

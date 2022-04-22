@@ -18,7 +18,7 @@ html(lang="en")
     main
       #form.jumbotron
         h1 Hymn
-        p Transform your text into a song
+        p Transform your text into a song !
         form
           button.hide(type="submit", disabled, aria-hidden="true")
           input#data(type="text", placeholder="Your text")
@@ -35,6 +35,6 @@ html(lang="en")
             span Print
           button#new(type="button")
             include img/edit.svg
-            span New
+            span Change text
 
     script(src="./js/main.js", type="module")

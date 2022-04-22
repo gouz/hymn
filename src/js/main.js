@@ -9,11 +9,15 @@ const share = new Share();
 
 const $data = document.getElementById("data");
 
+const toggleJumbo = () => {
+  document.getElementById("form").classList.toggle("hide");
+  document.getElementById("music").classList.toggle("hide");
+};
+
 const maestro = (text) => {
   const composer = new Compose(text, new Stegano().encode(text));
   new SheetAudio("sheet", "audio", composer.render());
-  document.getElementById("form").classList.add("hide");
-  document.getElementById("music").classList.remove("hide");
+  toggleJumbo();
 };
 
 const currentLink = share.fetchLink();
@@ -39,4 +43,13 @@ document.getElementById("generate").addEventListener("click", () => {
   const text = $data.value;
   maestro(text);
   share.defineLink(text);
+});
+
+document.getElementById("new").addEventListener("click", () => {
+  toggleJumbo();
+  $data.focus();
+});
+
+document.getElementById("print").addEventListener("click", () => {
+  window.print();
 });
