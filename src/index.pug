@@ -6,7 +6,6 @@ html(lang="en")
 
   body
     header
-      h1 Hymn
       a#github(
         href="https://github.com/gouz/hymn",
         rel="noopener",
@@ -16,13 +15,26 @@ html(lang="en")
         include img/github.svg
         span.a11y Link to the source
 
-    form
-      button.hidden(type="submit", disabled, aria-hidden="true")
-      input#data(type="text", placeholder="Your text")
+    main
+      #form.jumbotron
+        h1 Hymn
+        p Transform your text into a song
+        form
+          button.hide(type="submit", disabled, aria-hidden="true")
+          input#data(type="text", placeholder="Your text")
+          button#generate(type="button") 
+            include img/music.svg
+            span Music, maestro !
 
-    #abc
-      #audio
-
-      #sheet
+      #music.jumbotron.hide
+        #sheet
+        #audio
+        #buttons-wrapper
+          button#print(type="button")
+            include img/print.svg
+            span Print
+          button#new(type="button")
+            include img/edit.svg
+            span New
 
     script(src="./js/main.js", type="module")

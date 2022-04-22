@@ -7,24 +7,36 @@ import Share from "./methods/Share";
 
 const share = new Share();
 
+const $data = document.getElementById("data");
+
 const maestro = (text) => {
   const composer = new Compose(text, new Stegano().encode(text));
   new SheetAudio("sheet", "audio", composer.render());
-  share.defineLink(text);
+  document.getElementById("form").classList.add("hide");
+  document.getElementById("music").classList.remove("hide");
 };
 
 const currentLink = share.fetchLink();
 if ("" != currentLink) {
+  $data.value = currentLink;
   maestro(currentLink);
 }
 
-document.getElementById("data").addEventListener(
+$data.addEventListener(
   "keydown",
   (event) => {
     if (event.key == "Enter") {
-      maestro(event.target.value);
+      const text = event.target.value;
+      maestro(text);
+      share.defineLink(text);
       return false;
     }
   },
   false
 );
+
+document.getElementById("generate").addEventListener("click", () => {
+  const text = $data.value;
+  maestro(text);
+  share.defineLink(text);
+});

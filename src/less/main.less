@@ -1,12 +1,34 @@
 @tailwind base;
 
+html, body {
+    @apply w-full h-full;
+}
+
 body {
-    @apply bg-slate-900;
+    @apply bg-slate-800;
 }
 
 .a11y {
     @apply sr-only;
 }
+
+.hide {
+    @apply hidden;
+}
+
+main {
+    @apply flex items-center justify-center;
+    @apply w-full h-full;
+
+    .jumbotron {
+        @apply rounded-lg;
+        @apply bg-slate-100;
+        @apply px-8 py-4;
+        @apply shadow-lg shadow-slate-600;
+        @apply border border-slate-900;
+    }
+}
+
 
 @import "./_header.less";
 @import "./_form.less";
