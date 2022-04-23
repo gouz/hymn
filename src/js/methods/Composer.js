@@ -1,26 +1,15 @@
 import rangesJson from "../../json/ranges.json";
 
-export default class Compose {
+export default class Composer {
   constructor(text, chords) {
     this._text = text;
     this._chords = chords;
 
     this._mode = "major";
 
+    this._unitNoteLength = 8;
+    this._meter = 4;
     this._subdiv = 4;
-  }
-
-  _alt(n) {
-    if ("E+" == n) {
-      n = "F";
-    } else if ("F-" == n) {
-      n == "E";
-    } else if ("C-" == n) {
-      n == "B";
-    } else if ("B+" == n) {
-      n == "C";
-    }
-    return n.replace(/(\w)-/g, "_$1").replace(/(\w)\+/, "^$1");
   }
 
   _chordify(n) {
@@ -45,17 +34,90 @@ export default class Compose {
     ].join(" ");
   }
 
+  _chordsTreatment() {
+    let symbol = "";
+    this._chords = this._chords.map((chord) => {
+      let transpose = 0;
+      if ("E+" == chord) {
+        chord = "F";
+      } else if ("F-" == chord) {
+        chord == "E";
+      } else if ("C-" == chord) {
+        chord == "B";
+      } else if ("B+" == chord) {
+        chord == "C";
+      }
+      chord = chord.replace(/(\w)-/g, "_$1").replace(/(\w)\+/, "^$1");
+      rangesJson[this._mode][chord].forEach((note) => {
+        if (note.length > 1) {
+          if ("" != symbol && note.substring(0, 1) != symbol) {
+            if ("+" == symbol) {
+              transpose = -1;
+            } else {
+              transpose = 1;
+            }
+          } else {
+            symbol = note.substring(0, 1);
+          }
+        }
+      });
+      if (0 != transpose) {
+        if (1 == transpose) {
+          switch (chord) {
+            case "_A":
+              chord = "^G";
+              break;
+            case "_B":
+              chord = "^A";
+              break;
+            case "_D":
+              chord = "^C";
+              break;
+            case "_E":
+              chord = "^D";
+              break;
+            case "_G":
+              chord = "^F";
+              break;
+          }
+        } else {
+          switch (chord) {
+            case "^A":
+              chord = "_B";
+              break;
+            case "^C":
+              chord = "_D";
+              break;
+            case "^D":
+              chord = "_E";
+              break;
+            case "^F":
+              chord = "_G";
+              break;
+            case "^G":
+              chord = "_A";
+              break;
+          }
+        }
+      }
+      return chord;
+    });
+  }
+
   render() {
+    console.log(this._chords);
+    this._chordsTreatment();
+    console.log(this._chords);
     let score =
       `
 X: 1
 C: Hymn // gouz
 Q: 100
 T: ${this._text}
-M: ${this._subdiv}/4
+M: ${this._subdiv}/${this._meter}
 V: T1 clef=treble
 V: B1 clef=bass
-L: 1/8
+L: 1/${this._unitNoteLength}
 `.trim() + " ";
     /*
     let previousAccidentals = {
@@ -124,13 +186,9 @@ L: 1/8
           break;
       }
       */
-      trebleVoice.push(
-        `${i == 0 ? "\n[V: T1]" : ""}${this._arpegify(this._alt(n))}`
-      );
+      trebleVoice.push(`${i == 0 ? "\n[V: T1]" : ""}${this._arpegify(n)}`);
       bassVoice.push(
-        `${i == 0 ? "\n[V: B1]" : ""}${this._chordify(this._alt(n))}${
-          2 * this._subdiv
-        }`
+        `${i == 0 ? "\n[V: B1]" : ""}${this._chordify(n)}${2 * this._subdiv}`
       );
     });
     return `${score}\n[V: T1] ${trebleVoice.join(

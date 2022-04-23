@@ -1,8 +1,8 @@
 import "../less/main.less";
 
-import Stegano from "./methods/Stegano";
+import Cipher from "./methods/Cipher";
 import SheetAudio from "./methods/SheetAudio";
-import Compose from "./methods/Compose";
+import Composer from "./methods/Composer";
 import Share from "./methods/Share";
 
 const share = new Share();
@@ -15,7 +15,7 @@ const toggleJumbo = () => {
 };
 
 const maestro = (text) => {
-  const composer = new Compose(text, new Stegano().encode(text));
+  const composer = new Composer(text, new Cipher().encode(text));
   new SheetAudio("sheet", "audio", composer.render());
   toggleJumbo();
 };

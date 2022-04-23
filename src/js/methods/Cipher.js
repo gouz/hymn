@@ -1,6 +1,6 @@
 // https://en.wikipedia.org/wiki/Musical_cryptogram
 
-export default class Stegano {
+export default class Cipher {
   constructor() {}
 
   encode(textToEncode) {
