@@ -1,14 +1,25 @@
-import chordsJson from "../../json/chords.json";
+import rangesJson from "../../json/ranges.json";
 
 export default class Compose {
   constructor(text, chords) {
     this._text = text;
     this._chords = chords;
 
+    this._mode = "major";
+
     this._subdiv = 4;
   }
 
   _alt(n) {
+    if ("E+" == n) {
+      n = "F";
+    } else if ("F-" == n) {
+      n == "E";
+    } else if ("C-" == n) {
+      n == "B";
+    } else if ("B+" == n) {
+      n == "C";
+    }
     return n.replace(/(\w)-/g, "_$1").replace(/(\w)\+/, "^$1");
   }
 
@@ -18,15 +29,19 @@ export default class Compose {
     if ("A" == note || "B" == note) {
       sep = ",,";
     }
-    return `[${chordsJson[n].join(sep)}${sep}]`;
+    let chord = [];
+    [0, 2, 4].forEach((i) => {
+      chord.push(rangesJson[this._mode][n][i]);
+    });
+    return `[${chord.join(sep)}${sep}]`;
   }
 
   _arpegify(n) {
     return [
-      `${chordsJson[n][0]}2`,
-      `${chordsJson[n][1]}2`,
-      `${chordsJson[n][2]}2`,
-      `${chordsJson[n][1]}2`,
+      `${rangesJson[this._mode][n][0]}2`,
+      `${rangesJson[this._mode][n][2]}2`,
+      `${rangesJson[this._mode][n][4]}2`,
+      `${rangesJson[this._mode][n][0]}2`,
     ].join(" ");
   }
 
