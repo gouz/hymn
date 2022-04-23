@@ -6,6 +6,8 @@ export default class SheetAudio {
     console.log(score);
     const visualObj = ABCJS.renderAbc(elementSheet, score, {
       add_classes: true,
+      staffwidth: "740",
+      wrap: "staffwidth",
     });
 
     if (ABCJS.synth.supportsAudio()) {
