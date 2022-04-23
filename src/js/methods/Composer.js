@@ -105,9 +105,7 @@ export default class Composer {
   }
 
   render() {
-    console.log(this._chords);
     this._chordsTreatment();
-    console.log(this._chords);
     let score =
       `
 X: 1
