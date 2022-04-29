@@ -7,6 +7,8 @@ export default class Composer {
 
     this._mode = "major";
 
+    this._symbol = "";
+
     this._unitNoteLength = 8;
     this._meter = 4;
     this._subdiv = 4;
@@ -35,9 +37,7 @@ export default class Composer {
   }
 
   _chordsTreatment() {
-    let symbol = "";
     this._chords = this._chords.map((chord) => {
-      let transpose = 0;
       if ("E+" == chord) {
         chord = "F";
       } else if ("F-" == chord) {
@@ -48,60 +48,96 @@ export default class Composer {
         chord == "C";
       }
       chord = chord.replace(/(\w)-/g, "_$1").replace(/(\w)\+/, "^$1");
-      rangesJson[this._mode][chord].forEach((note) => {
-        if (note.length > 1) {
-          if ("" != symbol && note.substring(0, 1) != symbol) {
-            if ("+" == symbol) {
-              transpose = -1;
-            } else {
-              transpose = 1;
-            }
-          } else {
-            symbol = note.substring(0, 1);
-          }
-        }
-      });
-      if (0 != transpose) {
-        if (1 == transpose) {
-          switch (chord) {
-            case "_A":
-              chord = "^G";
-              break;
-            case "_B":
-              chord = "^A";
-              break;
-            case "_D":
-              chord = "^C";
-              break;
-            case "_E":
-              chord = "^D";
-              break;
-            case "_G":
-              chord = "^F";
-              break;
-          }
-        } else {
-          switch (chord) {
-            case "^A":
-              chord = "_B";
-              break;
-            case "^C":
-              chord = "_D";
-              break;
-            case "^D":
-              chord = "_E";
-              break;
-            case "^F":
-              chord = "_G";
-              break;
-            case "^G":
-              chord = "_A";
-              break;
-          }
-        }
-      }
       return chord;
     });
+  }
+
+  _normalize(voice) {
+    // remove accidentals
+    voice = voice.map((v) => {
+      let previousAccidentals = {};
+      return v
+        .split(" ")
+        .map((n) => {
+          if (String(n).startsWith("_") || String(n).startsWith("^")) {
+            let accidental = n.substr(0, 1);
+            let note = n.substr(1, 1);
+            let rest = n.substr(2);
+            if ("" == this._symbol) {
+              this._symbol = accidental;
+            } else {
+              if (accidental != this._symbol) {
+                // sharp is different than flat
+                if ("_" == accidental) {
+                  // flat becomes shart
+                  accidental = "^";
+                  switch (note) {
+                    default:
+                      break;
+                    case "A":
+                      note = "G";
+                      break;
+                    case "B":
+                      note = "A";
+                      break;
+                    case "C":
+                      note = "B";
+                      break;
+                    case "D":
+                      note = "C";
+                      break;
+                    case "E":
+                      note = "D";
+                      break;
+                    case "F":
+                      note = "E";
+                      break;
+                    case "G":
+                      note = "F";
+                      break;
+                  }
+                } else {
+                  // sharp becomes flat
+                  accidental = "_";
+                  switch (note) {
+                    default:
+                      break;
+                    case "A":
+                      note = "B";
+                      break;
+                    case "B":
+                      note = "C";
+                      break;
+                    case "C":
+                      note = "D";
+                      break;
+                    case "D":
+                      note = "E";
+                      break;
+                    case "E":
+                      note = "F";
+                      break;
+                    case "F":
+                      note = "G";
+                      break;
+                    case "G":
+                      note = "A";
+                      break;
+                  }
+                }
+              }
+              n = `${accidental}${note}${rest}`;
+              if (previousAccidentals[n] != null) {
+                n = `${note}${rest}`;
+              }
+            }
+            previousAccidentals[n] = 1;
+          }
+          return n;
+        })
+        .join(" ");
+    });
+    return voice;
   }
 
   render() {
@@ -117,54 +153,10 @@ V: T1 clef=treble
 V: B1 clef=bass
 L: 1/${this._unitNoteLength}
 `.trim() + " ";
-    /*
-    let previousAccidentals = {
-      A: "",
-      B: "",
-      C: "",
-      D: "",
-      E: "",
-      F: "",
-      G: "",
-    };
-    */
-    /*
-    let previousPitchs = {
-      A: 1,
-      B: 1,
-      C: 1,
-      D: 1,
-      E: 1,
-      F: 1,
-      G: 1,
-    };
-    */
     let trebleVoice = [];
     let bassVoice = [];
-    this._chords.forEach((n, i) => {
+    this._chords.forEach((n) => {
       /*
-      const note = n.substr(0, 1);
-      let accidental = "";
-      if (n.length == 2) {
-        accidental = n.substr(1, 1);
-      }
-      if ("" == accidental && "" != previousAccidentals[note]) {
-        n = `=${n}`;
-      } else if ("" != accidental && accidental == previousAccidentals[note]) {
-        n = note;
-      }
-      previousAccidentals[note] = accidental;
-      */
-      /*
-      let pitch = Math.floor(4 * Math.random());
-      if (Math.abs(previousPitchs[note] - pitch) > 1) {
-        if (pitch > previousPitchs[note]) {
-          pitch = previousPitchs[note] + 1;
-        } else {
-          pitch = previousPitchs[note] - 1;
-        }
-      }
-      previousPitchs[note] = pitch;
       switch (pitch) {
         case 0:
           // bass
@@ -184,13 +176,11 @@ L: 1/${this._unitNoteLength}
           break;
       }
       */
-      trebleVoice.push(`${i == 0 ? "\n[V: T1]" : ""}${this._arpegify(n)}`);
-      bassVoice.push(
-        `${i == 0 ? "\n[V: B1]" : ""}${this._chordify(n)}${2 * this._subdiv}`
-      );
+      trebleVoice.push(`${this._arpegify(n)}`);
+      bassVoice.push(`${this._chordify(n)}${2 * this._subdiv}`);
     });
-    return `${score}\n[V: T1] ${trebleVoice.join(
+    return `${score}\n[V: T1] ${this._normalize(trebleVoice).join(
       "|"
-    )}|]\n[V: B1] ${bassVoice.join("|")}|]`;
+    )}|]\n[V: B1] ${this._normalize(bassVoice).join("|")}|]`;
   }
 }
