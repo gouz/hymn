@@ -31,7 +31,7 @@
     "@parcel/transformer-pug": "2.5.0",
     "@prettier/plugin-pug": "2.0.0",
     "abcjs": "6.0.2",
-    "autoprefixer": "10.4.4",
+    "autoprefixer": "10.4.5",
     "buffer": "6.0.3",
     "eslint": "8.14.0",
     "parcel": "2.5.0",
