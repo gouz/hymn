@@ -22,17 +22,17 @@ export default class Composer {
     }
     let chord = [];
     [0, 2, 4].forEach((i) => {
-      chord.push(rangesJson[this._mode][n][i]);
+      chord.push(rangesJson[this._mode][n].notes[i]);
     });
     return `[${chord.join(sep)}${sep}]`;
   }
 
   _arpegify(n) {
     return [
-      `${rangesJson[this._mode][n][0]}2`,
-      `${rangesJson[this._mode][n][2]}2`,
-      `${rangesJson[this._mode][n][4]}2`,
-      `${rangesJson[this._mode][n][0]}2`,
+      `${rangesJson[this._mode][n].notes[0]}2`,
+      `${rangesJson[this._mode][n].notes[2]}2`,
+      `${rangesJson[this._mode][n].notes[4]}2`,
+      `${rangesJson[this._mode][n].notes[0]}2`,
     ].join(" ");
   }
 
@@ -47,7 +47,7 @@ export default class Composer {
       } else if ("B+" == chord) {
         chord == "C";
       }
-      chord = chord.replace(/(\w)-/g, "_$1").replace(/(\w)\+/, "^$1");
+      chord = chord.replace(/(\w)-/g, "_$1").replace(/(\w)\+/g, "^$1");
       return chord;
     });
   }
@@ -174,6 +174,8 @@ export default class Composer {
     });
     return voice;
   }
+
+  _findKey() {}
 
   render() {
     this._chordsTreatment();
