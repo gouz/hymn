@@ -140,6 +140,41 @@ export default class Composer {
     return voice;
   }
 
+  _normalizeChords(voice) {
+    // remove accidentals
+    voice = voice.map((v) => {
+      let transform = {};
+      let accidental = "";
+      if ("_" == this._symbol) {
+        accidental = "^";
+        transform = {
+          C: "D",
+          D: "E",
+          F: "G",
+          G: "A",
+          A: "B",
+        };
+      } else {
+        accidental = "_";
+        transform = {
+          B: "A",
+          A: "G",
+          G: "F",
+          E: "D",
+          D: "C",
+        };
+      }
+      Object.keys(transform).forEach((k) => {
+        v = v.replace(
+          new RegExp(`${accidental}${k}`, "g"),
+          `${this._symbol}${transform[k]}`
+        );
+      });
+      return v;
+    });
+    return voice;
+  }
+
   render() {
     this._chordsTreatment();
     let score =
@@ -181,6 +216,6 @@ L: 1/${this._unitNoteLength}
     });
     return `${score}\n[V: T1] ${this._normalize(trebleVoice).join(
       "|"
-    )}|]\n[V: B1] ${this._normalize(bassVoice).join("|")}|]`;
+    )}|]\n[V: B1] ${this._normalizeChords(bassVoice).join("|")}|]`;
   }
 }
