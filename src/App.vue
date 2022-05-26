@@ -1,13 +1,27 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import Header from "./components/Header.vue";
 import Form from "./components/Form.vue";
 import Music from "./components/Music.vue";
+
+import { useStore } from "./stores/hymn";
+
+const store = useStore();
+onMounted(() => {
+  store.fetchRanges();
+  store.fetchRhythms();
+});
+
+function showMusic() {
+  document.getElementById("form").classList.add("hide");
+  document.getElementById("music").classList.remove("hide");
+}
 </script>
 
 <template lang="pug">
 Header
 main
-  Form
+  Form(@maestro="showMusic")
   Music
 </template>
 

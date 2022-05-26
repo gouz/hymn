@@ -1,12 +1,22 @@
+<script setup lang="ts">
+function printSheet() {
+  window.print();
+}
+
+function changeText() {
+  document.getElementById("form").classList.remove("hide");
+  document.getElementById("music").classList.add("hide");
+}
+</script>
 <template lang="pug">
 #music.jumbotron.hide
     #sheet
     #audio
     #buttons-wrapper
-        button#print(type="button")
+        button(type="button", @click="printSheet")
             include ../assets/img/print.svg
             span Print
-        button#new(type="button")
+        button(type="button", @click="changeText")
             include ../assets/img/edit.svg
             span Change text
 </template>

@@ -1,11 +1,28 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
+
+import { useStore } from "../stores/hymn";
+
+const hymnStore = useStore();
 
 let sentence: Ref<string> = ref("");
 
-function maestro(): void {
-  alert(sentence.value);
-}
+const maestro = (): void => {
+  hymnStore.sentence = sentence.value;
+  emit("maestro");
+};
+
+const emit = defineEmits({
+  maestro: null,
+});
+
+const keyChange = (event) => {
+  if (event.key == "Enter") {
+    hymnStore.sentence = sentence.value;
+    emit("maestro");
+    return false;
+  }
+};
 </script>
 <template lang="pug">
 #form.jumbotron
@@ -13,7 +30,7 @@ function maestro(): void {
     p Transform your text into a song !
     form
         button.hide(type="submit", disabled, aria-hidden="true")
-        input(type="text", placeholder="Your text", v-model="sentence")
+        input(type="text", placeholder="Your text", v-model="sentence", @keydown="keyChange")
         button(type="button", @click="maestro") 
             include ../assets/img/music.svg
             span Music, maestro !
