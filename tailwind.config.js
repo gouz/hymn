@@ -1,10 +1,7 @@
 module.exports = {
-  mode: "jit",
-  content: {
-    files: ["./src/**/*.pug"],
-  },
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
   plugins: [],
-};
+}

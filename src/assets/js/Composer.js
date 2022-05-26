@@ -1,11 +1,12 @@
 import rangesJson from "../../json/ranges.json";
-
+import rhythmsJson from "../../json/rhythms.json";
 export default class Composer {
   constructor(text, chords) {
     this._text = text;
     this._chords = chords;
 
     this._mode = "major";
+    this._rhythmDifficulty = "simple";
 
     this._symbol = "";
 
@@ -34,6 +35,37 @@ export default class Composer {
       `${rangesJson[this._mode][n].notes[4]}2`,
       `${rangesJson[this._mode][n].notes[0]}2`,
     ].join(" ");
+  }
+
+  _fractionToDecimal(f) {
+    return parseFloat(f.split("/").reduce((n, d, i) => n / (i ? d : 1)));
+  }
+
+  _melodify(n) {
+    let rhythms = [];
+    let sum = 0;
+    const nbRhythms = rhythmsJson[this._rhythmDifficulty].length;
+    const nbNotes = rangesJson[this._mode][n].notes.length;
+    do {
+      const rhythm =
+        rhythmsJson[this._rhythmDifficulty][
+          Math.floor(Math.random() * nbRhythms)
+        ];
+      const val = this._fractionToDecimal(rhythm);
+      if (sum + val <= this._unitNoteLength) {
+        sum += val;
+        rhythms.push(rhythm);
+      }
+    } while (sum != 8);
+    let melody = [];
+    rhythms.forEach((r) => {
+      melody.push(
+        `${
+          rangesJson[this._mode][n].notes[Math.floor(Math.random() * nbNotes)]
+        }${r}`
+      );
+    });
+    return melody.join("");
   }
 
   _chordsTreatment() {
@@ -213,7 +245,7 @@ L: 1/${this._unitNoteLength}
           break;
       }
       */
-      trebleVoice.push(`${this._arpegify(n)}`);
+      trebleVoice.push(`${this._melodify(n)}`);
       bassVoice.push(`${this._chordify(n)}${2 * this._subdiv}`);
     });
     return `${score}\n[V: T1] ${this._normalize(trebleVoice).join(

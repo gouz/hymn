@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply w-full h-full;
+}
+
+body {
+  @apply bg-slate-800;
+}
+
+.a11y {
+  @apply sr-only;
+}
+
+.hide {
+  @apply hidden;
+}
+
+button,
+[type="button"] {
+  @apply px-4 py-2;
+  @apply rounded;
+  @apply text-white;
+  @apply bg-green-700;
+  @apply border border-green-800;
+  @apply flex items-center;
+
+  svg {
+    @apply h-5 w-5;
+  }
+
+  span {
+    @apply ml-2;
+    @apply whitespace-nowrap;
+  }
+
+  &:hover {
+    @apply bg-green-500;
+  }
+}
+
+@media print {
+  header,
+  form,
+  #audio,
+  #buttons-wrapper {
+    @apply hidden;
+  }
+
+  main {
+    @apply block;
+
+    .jumbotron {
+      @apply border-none;
+      @apply shadow-none;
+    }
+  }
+}

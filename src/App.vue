@@ -1,20 +1,19 @@
-@tailwind base;
+<script setup lang="ts">
+import Header from "./components/Header.vue";
+import Form from "./components/Form.vue";
+import Music from "./components/Music.vue";
+</script>
 
-html,
-body {
+<template lang="pug">
+Header
+main
+  Form
+  Music
+</template>
+
+<style lang="less">
+#app {
   @apply w-full h-full;
-}
-
-body {
-  @apply bg-slate-800;
-}
-
-.a11y {
-  @apply sr-only;
-}
-
-.hide {
-  @apply hidden;
 }
 
 main {
@@ -29,9 +28,4 @@ main {
     @apply border border-slate-900;
   }
 }
-
-@import "./_header.less";
-@import "./_form.less";
-@import "./_music.less";
-
-@import "./_print.less";
+</style>
