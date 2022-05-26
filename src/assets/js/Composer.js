@@ -1,7 +1,5 @@
-import rangesJson from "../../json/ranges.json";
-import rhythmsJson from "../../json/rhythms.json";
 export default class Composer {
-  constructor(text, chords) {
+  constructor(text, chords, ranges, rhythms) {
     this._text = text;
     this._chords = chords;
 
@@ -13,6 +11,9 @@ export default class Composer {
     this._unitNoteLength = 8;
     this._meter = 4;
     this._subdiv = 4;
+
+    this._ranges = ranges;
+    this._rhythms = rhythms;
   }
 
   _chordify(n) {
@@ -23,17 +24,17 @@ export default class Composer {
     }
     let chord = [];
     [0, 2, 4].forEach((i) => {
-      chord.push(rangesJson[this._mode][n].notes[i]);
+      chord.push(this._ranges[this._mode][n].notes[i]);
     });
     return `[${chord.join(sep)}${sep}]`;
   }
 
   _arpegify(n) {
     return [
-      `${rangesJson[this._mode][n].notes[0]}2`,
-      `${rangesJson[this._mode][n].notes[2]}2`,
-      `${rangesJson[this._mode][n].notes[4]}2`,
-      `${rangesJson[this._mode][n].notes[0]}2`,
+      `${this._ranges[this._mode][n].notes[0]}2`,
+      `${this._ranges[this._mode][n].notes[2]}2`,
+      `${this._ranges[this._mode][n].notes[4]}2`,
+      `${this._ranges[this._mode][n].notes[0]}2`,
     ].join(" ");
   }
 
@@ -44,11 +45,11 @@ export default class Composer {
   _melodify(n) {
     let rhythms = [];
     let sum = 0;
-    const nbRhythms = rhythmsJson[this._rhythmDifficulty].length;
-    const nbNotes = rangesJson[this._mode][n].notes.length;
+    const nbRhythms = this._rhythms[this._rhythmDifficulty].length;
+    const nbNotes = this._ranges[this._mode][n].notes.length;
     do {
       const rhythm =
-        rhythmsJson[this._rhythmDifficulty][
+        this._rhythms[this._rhythmDifficulty][
           Math.floor(Math.random() * nbRhythms)
         ];
       const val = this._fractionToDecimal(rhythm);
@@ -61,7 +62,7 @@ export default class Composer {
     rhythms.forEach((r) => {
       melody.push(
         `${
-          rangesJson[this._mode][n].notes[Math.floor(Math.random() * nbNotes)]
+          this._ranges[this._mode][n].notes[Math.floor(Math.random() * nbNotes)]
         }${r}`
       );
     });

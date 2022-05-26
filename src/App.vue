@@ -6,10 +6,10 @@ import Music from "./components/Music.vue";
 
 import { useStore } from "./stores/hymn";
 
-const store = useStore();
+const hymnStore = useStore();
 onMounted(() => {
-  store.fetchRanges();
-  store.fetchRhythms();
+  hymnStore.fetchRanges();
+  hymnStore.fetchRhythms();
 });
 
 function showMusic() {

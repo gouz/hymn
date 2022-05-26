@@ -1,12 +1,35 @@
 <script setup lang="ts">
-function printSheet() {
-  window.print();
-}
+import Cipher from "../assets/js/Cipher";
+import Composer from "../assets/js/Composer";
+import SheetAudio from "../assets/js/SheetAudio";
 
-function changeText() {
+import { useStore } from "../stores/hymn";
+const hymnStore = useStore();
+
+hymnStore.$subscribe((mutation, state) => {
+  magic(state.sentence);
+});
+
+const printSheet = () => {
+  window.print();
+};
+
+const changeText = () => {
   document.getElementById("form").classList.remove("hide");
   document.getElementById("music").classList.add("hide");
-}
+};
+
+const magic = (text) => {
+  if ("" != text) {
+    const composer = new Composer(
+      text,
+      new Cipher().encode(text),
+      hymnStore.ranges,
+      hymnStore.rhythms
+    );
+    new SheetAudio("sheet", "audio", composer.render());
+  }
+};
 </script>
 <template lang="pug">
 #music.jumbotron.hide
