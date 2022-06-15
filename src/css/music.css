@@ -1,0 +1,15 @@
+#music {
+    width: 880px;
+}
+
+#audio {
+    margin: 1rem 0;
+}
+
+#sheet {
+    background-color: white;
+    color: black;
+    padding: 0 1rem 2rem;
+    border-radius: 0.5rem;
+    height: auto !important;
+}

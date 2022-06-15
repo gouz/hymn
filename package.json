@@ -1,27 +1,20 @@
 {
-  "name": "hymn",
+  "name": "hymntest",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
     "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.9.9"
   },
   "dependencies": {
     "abcjs": "^6.0.2",
-    "axios": "^0.27.2",
-    "less": "^4.1.2",
-    "pinia": "^2.0.14",
-    "pug": "^3.0.2",
-    "vue": "^3.2.25"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.3",
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",
-    "tailwindcss": "^3.0.24",
-    "typescript": "^4.5.4",
-    "vite": "^2.9.9",
-    "vue-tsc": "^0.34.7"
+    "postcss-import": "^14.1.0",
+    "postcss-nested": "^5.0.6"
   }
 }
