@@ -1,0 +1,17 @@
+@media print {
+
+    form,
+    #audio,
+    #buttons-wrapper {
+        display: none;
+    }
+
+    #app {
+        display: block !important;
+    }
+
+    hymn-music, #sheet {
+        padding: 0;
+        border-radius: 0;
+    }
+}

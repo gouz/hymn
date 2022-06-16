@@ -10,6 +10,11 @@ import rhythms from "./json/rhythms.json";
 const $hymnForm = document.querySelector("hymn-form");
 const $hymnMusic = document.querySelector("hymn-music");
 
+window.changeText = () => {
+  $hymnForm.classList.toggle("hidden");
+  $hymnMusic.classList.toggle("hidden");
+};
+
 $hymnForm.addEventListener(
   "maestro",
   (e) => {

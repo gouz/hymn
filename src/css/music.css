@@ -13,3 +13,47 @@
     border-radius: 0.5rem;
     height: auto !important;
 }
+
+hymn-music {
+    background-color: rgb(241 245 249);
+    border-width: 1px;
+    border-color: rgb(15 23 42);
+    border-radius: .5rem;
+    padding: 1rem 2rem;
+}
+
+#buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    button {
+        color: rgb(255 255 255);
+        background-color: rgb(21 128 61);
+        border-width: 1px;
+        border-color: rgb(22 101 52);
+        border-radius: .25rem;
+        align-items: center;
+        padding: .5rem 1rem;
+        display: flex;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 100%;
+        line-height: inherit;
+    }
+
+    button svg {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+
+    button span {
+        display: block;
+        white-space: nowrap;
+        margin-left: .5rem;
+    }
+
+    button:hover {
+        background-color: rgb(34 197 94);
+    }
+}
