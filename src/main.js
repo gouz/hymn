@@ -19,7 +19,9 @@ $hymnForm.addEventListener(
       ranges,
       rhythms
     );
-    $hymnMusic.abcjs = composer.render();
+    const score = composer.render();
+    $hymnMusic.abcjs = score;
+    console.log(score);
     $hymnForm.classList.toggle("hidden");
     $hymnMusic.classList.toggle("hidden");
   },
