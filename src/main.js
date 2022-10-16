@@ -1,7 +1,7 @@
 import "./main.css";
 
-import HymnForm from "./components/Form";
-import HymnMusic from "./components/Music";
+import "./components/Form";
+import "./components/Music";
 import Cipher from "./js/Cipher";
 import Composer from "./js/Composer";
 import ranges from "./json/ranges.json";

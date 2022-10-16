@@ -19,7 +19,9 @@ export default class Composer {
       "V: T1": {
         clef: "treble",
       },
-      //"V: B1 clef=bass"
+      "V: B1": {
+        clef: "bass",
+      },
     };
   }
 
@@ -102,7 +104,11 @@ export default class Composer {
           rhythms.push(rhythm);
         }
         cpt++;
-      } while (sum != this._unitNoteLength && cpt <= this._melody.length);
+      } while (sum != this._unitNoteLength && cpt < this._melody.length);
+      if (sum != this._unitNoteLength) {
+        rhythms[rhythms.length - 1] =
+          this._unitNoteLength - (sum - parseInt(rhythms[rhythms.length - 1]));
+      }
       measures.push(rhythms);
     } while (cpt <= this._melody.length);
     let melody = [];
@@ -125,6 +131,9 @@ export default class Composer {
     Object.keys(this._voices).forEach((k) => {
       voicesHeader.push(`${k} clef=${this._voices[k].clef}`);
     });
+    console.log(this._melody);
+    const melody = this._melodify();
+    console.log(melody);
     let score =
       `
 X: 1
@@ -135,6 +144,8 @@ M: ${this._subdiv}/${this._meter}
 ${voicesHeader.join("\n")}
 L: 1/${this._unitNoteLength}
 `.trim() + " ";
-    return `${score}\n[V: T1] ${this._melodify().join("|")}|]\n`;
+    return `${score}\n[V: T1] ${melody.join(
+      "|"
+    )}|]\n[V: B1] [B,D,F,]8|[A,C,E,]8|[E,G,B,]8|[G,B,D,]8|]`;
   }
 }
